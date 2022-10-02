@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { BsCart2 } from "react-icons/bs";
 import { CartMenu, ItemInCart } from "../index";
@@ -8,8 +9,14 @@ import "./cart-block.css";
 const CartBlock = () => {
   const items = useSelector((state) => state.cart.itemsInCart);
   const totalPrice = calcTotalPrice(items);
+  const navigate = useNavigate();
 
   const [isCartMenuVisible, setIsCartMenuVisible] = useState(false);
+
+  const handleClick = useCallback(() => {
+    setIsCartMenuVisible(false);
+    navigate("/order");
+  }, [navigate]);
 
   return (
     <div className="cart-block">
@@ -22,7 +29,7 @@ const CartBlock = () => {
       {totalPrice > 0 ? (
         <span className="cart-block__total-price">{totalPrice} сом.</span>
       ) : null}
-      {isCartMenuVisible && <CartMenu items={items} onClick={null} />}
+      {isCartMenuVisible && <CartMenu items={items} onClick={handleClick} />}
     </div>
   );
 };
