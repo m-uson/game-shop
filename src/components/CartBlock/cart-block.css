@@ -10,7 +10,7 @@
   font-weight: bold;
 }
 
-.cart-icon {
+.cart-block__icon {
   cursor: pointer;
   position: relative;
 }
